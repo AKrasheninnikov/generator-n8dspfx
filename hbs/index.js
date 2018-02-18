@@ -50,38 +50,44 @@ module.exports = class extends Generator {
     }
 
     install() {
-        this._custLog('Change configuration before actuall installation can happen');
+
         // Apply Custom configuration
         this._applyCustomConfig();
+
         // Adding externals      
         this._addExternals();
 
         // add additional typings
         this._addTypings();
+
         // write Sample Code
         this._writingSampleCode();
 
-        this._custLog('Install required npm dependencies to exisitin package.json');
         // Install additional NPM Packages
         this._installNPMPackages();
 
-        // process installations
+        // Process install
         this._processInstall();
-        
+
     }
 
     // Run installer normally time to say goodbye
     // If yarn is installed yarn will be used
-    end() {
+    end() {}
 
-        // const hasYarn = commandExists('yarn');
-        // this.installDependencies({
-        //     npm: !hasYarn,
-        //     bower: false,
-        //     yarn: hasYarn,
-        //     skipMessage: this.options['skip-install-message'],
-        //     skipInstall: this.options['skip-install']
-        // });
+    _processInstall() {
+
+        console.log('Process Install');
+
+        const hasYarn = commandExists('yarn');
+
+        this.installDependencies({
+            npm: !hasYarn,
+            bower: false,
+            yarn: hasYarn,
+            skipMessage: this.options['skip-install-message'],
+            skipInstall: this.options['skip-install']
+        });
 
     }
 
@@ -90,7 +96,7 @@ module.exports = class extends Generator {
 
         // backup default gulp file;
         // Fallback to NodeJS FS Object because otherwise in Yeoman context not possible
-        fs.rename(
+        fs.renameSync(
             this.destinationPath('gulpfile.js'),
             this.destinationPath('gulpfile.spfx.js')
         );
@@ -181,8 +187,7 @@ module.exports = class extends Generator {
 
         // Spawn dev dependencies
         this.npmInstall(['install',
-            'handlebars-template-loader',
-            'jquery'
+            'handlebars-template-loader'
         ], [
             '--save-dev',
             '--no-shrinkwrap'

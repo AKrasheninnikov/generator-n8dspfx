@@ -12,10 +12,10 @@ build.addSuppression(`Warning - [sass] The local CSS class 'ms-Grid' is not came
 build.configureWebpack.mergeConfig({
     additionalConfiguration: (generatedConfiguration) => {
         
-        console.log('------------------------------');
-        console.log(generatedConfiguration.module);
-        console.log(generatedConfiguration.module.rules);
-        console.log('------------------------------');
+        // console.log('------------------------------');
+        // console.log(generatedConfiguration.module);
+        // console.log(generatedConfiguration.module.rules);
+        // console.log('------------------------------');
 
         generatedConfiguration.module.rules.push(loaderConfig);
 
