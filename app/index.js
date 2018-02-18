@@ -6,6 +6,8 @@ const Generator = require('yeoman-generator');
 const commandExists = require('command-exists').sync;
 // Add Color Support to Higlight steps in this generator
 const chalk = require('chalk');
+// yosay
+const yosay = require('yosay');
 
 // Avoid conflict message
 const fs = require('fs');
@@ -17,7 +19,12 @@ module.exports = class extends Generator {
     }
 
     // Initialisation Generator + SPFx generator
-    initializing() {}
+    initializing() {
+        this.log(yosay(
+            chalk.yellow.bold("N8D - Custom generator") +
+            chalk.blue("\nbased on") +
+            chalk.cyan.bold("\n@microsoft/SharePoint")));
+    }
 
     // Prompt for user input for Custom Generator
     prompting() {
