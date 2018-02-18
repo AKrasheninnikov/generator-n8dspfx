@@ -20,57 +20,59 @@ module.exports = class extends Generator {
     // Initialisation Generator + SPFx generator
     initializing() {
 
-        // Fetch current package.json
-        this.pkg = require('../package.json');
-        this.nested = false;
-
         this.composeWith(
             require.resolve(`@microsoft/generator-sharepoint/lib/generators/app`), {
                 'skip-install': true,
-                'framework': 'none',
-                'nested': true
+                'framework': 'none'
             }
         );
     }
 
     // Prompt for user input for Custom Generator
-    prompting() {
-    }
+    prompting() {}
 
     // adds additonal editor support in this case CSS Comb
-    configuring() {
-    }
+    configuring() {}
 
     // not used because of the dependencies of the SPFx file
     // Code was moved to Install
-    writing() {
-        
-    }
+    writing() {}
 
     install() {
 
-        // Adding externals      
-        this._addExternals();
-        // add additional typings
-        this._addTypings();
 
-        // Install additional NPM Packages
-        this._installNPMPackages();
+        // Adding externals libraries
+        this._addExternals();
+
     }
 
     // Run installer normally time to say goodbye
     // If yarn is installed yarn will be used
     end() {
+        console.log("All Done");
+    }
 
-        // const hasYarn = commandExists('yarn');
-        // this.installDependencies({
-        //     npm: !hasYarn,
-        //     bower: false,
-        //     yarn: hasYarn,
-        //     skipMessage: this.options['skip-install-message'],
-        //     skipInstall: this.options['skip-install']
+    install() {
+
+        // Install additional NPM Packages
+        this._installNPMPackages();
+        this._processInstall();
+        // .then(() => {
+
+
+
         // });
 
+    }
+
+    _processInstall(){
+        const hasYarn = commandExists('yarn');
+
+        this.installDependencies({
+            npm: !hasYarn,
+            bower: false,
+            yarn: hasYarn
+        });
     }
 
     // reference external in config.json automatically
@@ -81,7 +83,7 @@ module.exports = class extends Generator {
         let config = this.fs.readJSON(this.destinationPath('config/config.json'));
 
         // Add Handlebars entry
-        config.externals.handlebars = "./node_modules/jquery/dist/jquery.js";
+        config.externals.jquery = "./node_modules/jquery/dist/jquery.js"
 
         // writing json
         fs.writeFileSync(
@@ -94,13 +96,17 @@ module.exports = class extends Generator {
     // install additional NPM packaged for jQuer, Handlbars, webpack loader ...
     _installNPMPackages() {
 
+        var done = this.async();
+
         // Spawn dev dependencies
-        this.spawnCommand('npm', ['install',
-            'handlebars-template-loader',
-            'jquery',
-            '--save-dev'
+        this.npmInstall([
+            '@types/jquery',
+            'jquery'],[
+            '--save',
+            '--no-shrinkwrap'
         ]);
 
+        done();
 
     }
 
