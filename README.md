@@ -16,6 +16,7 @@ npm link
 ```
 
 The generator is not published on NPM. The only way to use and install it is through cloning the repository and link the local files in the global npm cache.
+In general this generator should only be used to configure new projects after the configuration has once been provisioned `@microsoft/sharepoint` should be used.
 
 ## Usage
 
