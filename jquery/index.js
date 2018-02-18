@@ -57,12 +57,6 @@ module.exports = class extends Generator {
         // Install additional NPM Packages
         this._installNPMPackages();
         this._processInstall();
-        // .then(() => {
-
-
-
-        // });
-
     }
 
     _processInstall(){

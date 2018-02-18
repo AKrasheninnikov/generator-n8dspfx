@@ -34,8 +34,7 @@ module.exports = class extends Generator {
     }
 
     // Prompt for user input for Custom Generator
-    prompting() {
-    }
+    prompting() {}
 
     // adds additonal editor support in this case CSS Comb
     configuring() {
@@ -47,7 +46,7 @@ module.exports = class extends Generator {
     // not used because of the dependencies of the SPFx file
     // Code was moved to Install
     writing() {
-        
+
     }
 
     install() {
@@ -65,6 +64,10 @@ module.exports = class extends Generator {
         this._custLog('Install required npm dependencies to exisitin package.json');
         // Install additional NPM Packages
         this._installNPMPackages();
+
+        // process installations
+        this._processInstall();
+        
     }
 
     // Run installer normally time to say goodbye
@@ -174,20 +177,29 @@ module.exports = class extends Generator {
     // install additional NPM packaged for jQuer, Handlbars, webpack loader ...
     _installNPMPackages() {
 
+        var done = this.async();
+
         // Spawn dev dependencies
-        this.spawnCommand('npm', ['install',
+        this.npmInstall(['install',
             'handlebars-template-loader',
-            'jquery',
-            '--save-dev'
+            'jquery'
+        ], [
+            '--save-dev',
+            '--no-shrinkwrap'
         ]);
 
         // Spawn dependencies
-        this.spawnCommand('npm', [
-            'install',
-            'handlebars',
-            '@types/handlebars',
-            '--save'
-        ]);
+        this.npmInstall(
+            [
+                'install',
+                'handlebars',
+                '@types/handlebars',
+            ], [
+                '--save',
+                '--no-shrinkwrap'
+            ]);
+
+        done();
 
     }
 
