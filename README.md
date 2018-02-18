@@ -31,7 +31,7 @@ The basic usage is to start a new project through:
 yo n8dspfx
 ```
 
---image
+![https://raw.githubusercontent.com/StfBauer/generator-n8dspfx/master/docassets/custom-spfx-yeoman.png](https://raw.githubusercontent.com/StfBauer/generator-n8dspfx/master/docassets/custom-spfx-yeoman.png)
 
 **Start new jQuery project**
 
