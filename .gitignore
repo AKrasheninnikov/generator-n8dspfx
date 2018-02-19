@@ -58,4 +58,4 @@ typings/
 .env
 
 #OSX
-.DS_Store
+.DS_Store/*
